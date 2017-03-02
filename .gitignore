@@ -1,6 +1,7 @@
 /.idea
-/build
-/logs
+/build/
+/vendor/
+/logs/
 
 .DS_Store
 /fluentbeat
