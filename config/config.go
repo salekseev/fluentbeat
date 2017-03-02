@@ -6,7 +6,7 @@ package config
 import "time"
 
 type Config struct {
-	Period time.Duration			  time.Duration     `config:"period"`
+	Period              			  time.Duration     `config:"period"`
 	Port                 			  int               `config:"port"`
 	Addr                 			  string
 	EnableJsonValidation              bool              `config:"enable_json_validation"`

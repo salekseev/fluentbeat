@@ -6,6 +6,14 @@ fluentbeat:
   # Defines how often an event is sent to the output
   period: 1s
 
+  port:                                  24224
+
+  enable_json_validation:                false
+
+  publish_failed_json_schema_validation: false
+
+  publish_failed_json_invalid:           false
+
 #================================ General ======================================
 
 # The name of the shipper that publishes the network data. It can be used to group
