@@ -2,7 +2,6 @@ package beater
 
 import (
 	"fmt"
-	"strings"
 	"time"
 
 	"github.com/elastic/beats/libbeat/beat"
@@ -36,7 +35,7 @@ func New(b *beat.Beat, cfg *common.Config) (beat.Beater, error) {
 		config: config,
 	}
 
-	if bt.config.EnableJsonValidation {
+	if bt.config.EnableJSONValidation {
 
 		bt.jsonDocumentSchema = map[string]gojsonschema.JSONLoader{}
 
@@ -60,6 +59,9 @@ func (bt *Fluentbeat) Run(b *beat.Beat) error {
 	bt.client = b.Publisher.Connect()
 	ticker := time.NewTicker(bt.config.Period)
 	counter := 1
+
+	input, err := fluentd_forwarder.NewForwardInput(FluentdLogger{}, bt.config.Addr, output)
+
 	for {
 		select {
 		case <-bt.done:
