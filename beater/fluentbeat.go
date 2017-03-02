@@ -2,12 +2,16 @@ package beater
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/elastic/beats/libbeat/beat"
 	"github.com/elastic/beats/libbeat/common"
 	"github.com/elastic/beats/libbeat/logp"
 	"github.com/elastic/beats/libbeat/publisher"
+	"github.com/fluent/fluentd-forwarder"
+	"github.com/pquerna/ffjson/ffjson"
+	"github.com/xeipuuv/gojsonschema"
 
 	"github.com/salekseev/fluentbeat/config"
 )
@@ -16,6 +20,8 @@ type Fluentbeat struct {
 	done   chan struct{}
 	config config.Config
 	client publisher.Client
+	jsonDocumentSchema	map[string]gojsonschema.JSONLoader
+	input	*fluentd_forwarder.ForwardInput
 }
 
 // Creates beater
@@ -29,6 +35,22 @@ func New(b *beat.Beat, cfg *common.Config) (beat.Beater, error) {
 		done:   make(chan struct{}),
 		config: config,
 	}
+
+	if bt.config.EnableJsonValidation {
+
+		bt.jsonDocumentSchema = map[string]gojsonschema.JSONLoader{}
+
+		for name, path := range config.JSONDocumentTypeSchema {
+			logp.Info("Loading JSON schema %s from %s", name, path)
+			schemaLoader := gojsonschema.NewReferenceLoader("file://" + path)
+			ds := schemaLoader
+			bt.jsonDocumentSchema[name] = ds
+		}
+
+	}
+
+	bt.config.Addr = fmt.Sprintf("127.0.0.1:%d", bt.config.Port)
+
 	return bt, nil
 }
 

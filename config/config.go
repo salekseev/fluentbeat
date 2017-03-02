@@ -6,19 +6,19 @@ package config
 import "time"
 
 type Config struct {
-	Period              			  time.Duration     `config:"period"`
-	Port                 			  int               `config:"port"`
-	Addr                 			  string
-	EnableJsonValidation              bool              `config:"enable_json_validation"`
-	PublishFailedJsonSchemaValidation bool              `config:"publish_failed_json_schema_validation"`
-	PublishFailedJsonInvalid          bool              `config:"publish_failed_json_invalid"`
-	JsonDocumentTypeSchema            map[string]string `config:"json_document_type_schema"`
+	Period                            time.Duration `config:"period"`
+	Port                              int           `config:"port"`
+	Addr                              string
+	EnableJSONValidation              bool              `config:"enable_json_validation"`
+	PublishFailedJSONSchemaValidation bool              `config:"publish_failed_json_schema_validation"`
+	PublishFailedJSONInvalid          bool              `config:"publish_failed_json_invalid"`
+	JSONDocumentTypeSchema            map[string]string `config:"json_document_type_schema"`
 }
 
 var DefaultConfig = Config{
-	Period:							   1 * time.Second,
-	Port:							   24224,
-	EnableJsonValidation:              false,
-	PublishFailedJsonSchemaValidation: false,
-	PublishFailedJsonInvalid:          false,
+	Period:                            1 * time.Second,
+	Port:                              24224,
+	EnableJSONValidation:              false,
+	PublishFailedJSONSchemaValidation: false,
+	PublishFailedJSONInvalid:          false,
 }

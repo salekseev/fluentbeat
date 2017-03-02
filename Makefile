@@ -36,6 +36,18 @@ depend:
 	go get -v $(DEPEND)
 	glide install
 
+# run gofmt and complain if a file is out of compliance
+# run go vet and similarly complain if there are issues
+# run go lint and complain if there are issues
+.PHONY: lint
+lint:
+	@if gofmt -l . | egrep -v ^vendor/ | grep .go; then \
+	  echo "^- Repo contains improperly formatted go files; run gofmt -w *.go" && exit 1; \
+	  else echo "All .go files formatted correctly"; fi
+	#go tool vet -v -composites=false *.go
+	#go tool vet -v -composites=false **/*.go
+	for pkg in $$(go list ./... |grep -v /vendor/); do golint $$pkg; done
+
 .PHONY: git-init
 git-init:
 	git init

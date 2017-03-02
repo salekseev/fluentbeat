@@ -1,5 +1,5 @@
 hash: 3cfbba20b743058dbd97f9bc2e7d6b4d498136b58afc21f35ae8b36bfec6d077
-updated: 2017-03-02T14:37:48.465970751-05:00
+updated: 2017-03-02T15:17:56.202964429-05:00
 imports:
 - name: github.com/davecgh/go-spew
   version: 5215b55f46b2b919f50a1df0eaa5886afe4e3b3d
@@ -93,8 +93,12 @@ imports:
   version: 19b0b332c9e4516a6370a0456e6182c3b5036720
 - name: github.com/mitchellh/hashstructure
   version: b098c52ef6beab8cd82bc4a32422cf54b890e8fa
+- name: github.com/moriyoshi/go-ioextras
+  version: af05ae27027c80a84cf28af1878dbdba35c530ae
 - name: github.com/nranchev/go-libGeoIP
   version: c78e8bd2dd3599feb21fd30886043979e82fe948
+- name: github.com/op/go-logging
+  version: 970db520ece77730c7e4724c61121037378659d9
 - name: github.com/pierrec/lz4
   version: 5c9560bfa9ace2bf86080bf40d46b34ae44604df
 - name: github.com/pierrec/xxHash
@@ -103,6 +107,12 @@ imports:
   - xxHash32
 - name: github.com/pkg/errors
   version: 01fa4104b9c248c8945d14d9f128454d5b28d595
+- name: github.com/pquerna/ffjson
+  version: 3d026ef03048958e4dd62b23e09bea58eeeedb9a
+  subpackages:
+  - ffjson
+  - fflib/v1
+  - fflib/v1/internal
 - name: github.com/rcrowley/go-metrics
   version: ab2277b1c5d15c3cba104e9cbddbdfc622df5ad8
   subpackages:
@@ -112,6 +122,18 @@ imports:
 - name: github.com/Shopify/sarama
   version: f0996189c86dc27338468f2a9b10077c6d572b34
   repo: https://github.com/urso/sarama
+- name: github.com/treasure-data/td-client-go
+  version: 27456c41fea18e617a34726be3d922f1476b7369
+- name: github.com/ugorji/go
+  version: c88ee250d0221a57af388746f5cf03768c21d6e2
+  subpackages:
+  - codec
+- name: github.com/xeipuuv/gojsonpointer
+  version: 6fe8760cad3569743d51ddbb243b26f8456742dc
+- name: github.com/xeipuuv/gojsonreference
+  version: e02fc20de94c78484cd5ffb007f8af96be030a45
+- name: github.com/xeipuuv/gojsonschema
+  version: ff0417f4272e480246b4507459b3f6ae721a87ac
 - name: golang.org/x/net
   version: d58ca6618b994150e624f6888d871f4709db51a0
   subpackages:
