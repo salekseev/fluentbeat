@@ -8,6 +8,7 @@ import (
 	"github.com/elastic/beats/libbeat/common"
 	"github.com/elastic/beats/libbeat/logp"
 	"github.com/elastic/beats/libbeat/publisher"
+	"github.com/op/go-logging"
 	"github.com/fluent/fluentd-forwarder"
 	"github.com/pquerna/ffjson/ffjson"
 	"github.com/xeipuuv/gojsonschema"
@@ -21,6 +22,13 @@ type Fluentbeat struct {
 	client publisher.Client
 	jsonDocumentSchema	map[string]gojsonschema.JSONLoader
 	input	*fluentd_forwarder.ForwardInput
+}
+
+type nullWriter struct {
+}
+
+func (n *nullWriter) Write(data []byte) (int, error) {
+	return len(data), nil
 }
 
 // Creates beater
@@ -60,7 +68,26 @@ func (bt *Fluentbeat) Run(b *beat.Beat) error {
 	ticker := time.NewTicker(bt.config.Period)
 	counter := 1
 
-	input, err := fluentd_forwarder.NewForwardInput(FluentdLogger{}, bt.config.Addr, output)
+	// TODO: optionally support logging
+	logger, err := logging.GetLogger("fluentd-forwarder")
+	if err != nil {
+		return nil, err
+	}
+	logger.SetBackend(logging.AddModuleLevel(logging.NewLogBackend(&nullWriter{}, "", 0)))
+
+	s := &source{
+		ioParams: ioParams,
+		bind:     "127.0.0.1:24224",
+		tagField: "tag",
+	}
+
+	input, err := fluentd_forwarder.NewForwardInput(logger, bt.config.Addr, s)
+
+	if err := ffjson.Unmarshal([]byte(input), &event); err != nil {
+				logp.Err("Could not load json formated event: %v", err)
+				event["message"] = input
+				event["tags"] = []string{"_udplogbeat_jspf"}
+			}
 
 	for {
 		select {

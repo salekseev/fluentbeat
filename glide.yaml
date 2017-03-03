@@ -9,3 +9,8 @@ import:
   - libbeat/publisher
 - package: github.com/fluent/fluentd-forwarder
   version: ^0.0.1
+- package: github.com/pquerna/ffjson
+  subpackages:
+  - ffjson
+- package: github.com/xeipuuv/gojsonschema
+- package: github.com/op/go-logging
